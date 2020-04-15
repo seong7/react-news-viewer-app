@@ -23,16 +23,19 @@ const sampleArticle = {
   urlToImage: 'https://via.placeholder.com/160', // 원하는 사이즈의 img 를 띄워주는 링크
 };
 
-const NewsList = () => {
+const NewsList = ({ category }) => {
   const [articles, setArticles] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // component 가 렌더된 직후 호출됨
   useEffect(() => {
     // async 를 사용하는 함수 따로 선언
     const fetchData = async () => {
       setLoading(true); // loadding 중인지 판단
       try {
+        const categoryQuery = category === 'all' ? '' : `&category=${category}`;
         const response = await axios.get(
-          'https://newsapi.org/v2/top-headlines?country=kr&apiKey=ba6ad61e6af045cfb3d1bd99fca11187',
+          `https://newsapi.org/v2/top-headlines?country=kr${categoryQuery}&apiKey=ba6ad61e6af045cfb3d1bd99fca11187`,
         );
         setArticles(response.data.articles);
       } catch (e) {
@@ -42,17 +45,19 @@ const NewsList = () => {
     };
 
     fetchData(); // async 함수 호출
-  }, []);
+  }, [category]);
 
-  // loading 중일 때
-  if (loading) {
-    return <NewsListBlock>대기 중...</NewsListBlock>;
-  }
-  // 아직 articles 값이 설정되지 않았을 때
+  // 아직 articles 값이 설정되지 않았을 때 (가장 최초에 호출됨)
   if (!articles) {
+    // console.log('null');
     return null; // 만약 articles 가 null 이면 null.map 에서 에러가 나므로 꼭 예외처리 해줌
   }
-  // articles 값이 유효할 때
+  // loading 중일 때
+  if (loading) {
+    // console.log('loading');
+    return <NewsListBlock>대기 중...</NewsListBlock>;
+  }
+  // loading 도 아니고 articles 값이 유효할 때
   return (
     <NewsListBlock>
       {/* <NewsItem article={sampleArticle} /> */}
@@ -64,4 +69,4 @@ const NewsList = () => {
   );
 };
 
-export default NewsList;
+export default React.memo(NewsList);

@@ -17,7 +17,7 @@ const App_axios_tutorial = () => {
   const onClick = async () => {
     try {
       const response = await axios.get(
-        'https://newsapi.org/v2/top-headlines?country=kr&apiKey=ba6ad61e6af045cfb3d1bd99fca11187',
+        'https://newsapi.org/v2/top-headlines?country=kr&category=business&apiKey=ba6ad61e6af045cfb3d1bd99fca11187',
       );
       setData(response.data);
       console.log(response);
