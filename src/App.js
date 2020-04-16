@@ -1,16 +1,26 @@
 import React, { useState, useCallback } from 'react';
 import NewsList from './components/NewsList';
 import Categories from './components/Categories';
+import { Route } from 'react-router-dom';
+import NewsPage from './pages/NewsPage';
 
 const App = () => {
-  const [category, setCategory] = useState('all');
-  const onSelect = useCallback((nextCategory) => {
-    setCategory(nextCategory);
-  }, []); // 처음 렌더링 될 때만 생성됨
+  // console.log('app');
+  // const [category, setCategory] = useState('all');
+  // const onSelect = useCallback((nextCategory) => {
+  //   setCategory(nextCategory);
+  // }, []); // 처음 렌더링 될 때만 생성됨
   return (
     <>
-      <Categories category={category} onSelect={onSelect} />
-      <NewsList category={category} />
+      {/* Route 없이 onSelect 함수로 구현 */}
+      {/* <Categories category={category} onSelect={onSelect} />
+      <NewsList category={category} /> */}
+      {/*******************************************/}
+      {/*                                         */}
+      {/*******************************************/}
+      {/* Route 로 구현 (onSelect 필요 없음) */}
+      {/* 1. param 이용하는 방법 */}
+      <Route path="/:category?" component={NewsPage} />
     </>
   );
 };

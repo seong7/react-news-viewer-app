@@ -4,12 +4,13 @@ import './index.css';
 import App from './App';
 import App_axios_tutorial from './App_axios_tutorial';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <BrowserRouter>
     {/* <App_axios_tutorial /> */}
     <App />
-  </React.StrictMode>,
+  </BrowserRouter>,
   document.getElementById('root'),
 );
 
